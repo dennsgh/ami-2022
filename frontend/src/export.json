@@ -1,0 +1,21 @@
+{
+    "annotations":
+    [
+        {
+            "file_name": "7025633.png",
+            "label": "dent"
+        },
+        {
+            "file_name": "7025641.png",
+            "label": "scratch"
+        },
+        {
+            "file_name": "7025458.png",
+            "label": "other"
+        },
+        {
+            "file_name": "7025407.png",
+            "label": "rim"
+        }
+    ]
+}

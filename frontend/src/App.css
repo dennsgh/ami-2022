@@ -1,0 +1,189 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+
+
+
+
+.TabHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: #F4F2F3 ;
+  font-size: 1.5vw ;
+  background-color: #304136;
+  
+}
+
+
+
+.navbarnew { 
+  position:fixed ;
+  z-index: 15;
+  width: 100%;
+  left: 0;
+  top: 0;
+  margin-left: 0; 
+  margin-right: 0;
+
+} 
+
+.navbar { 
+  background-color:#304136;
+  height: 4.5vw !important;
+  position:fixed ;
+  z-index: 8;
+  width: 100%;
+  left: 0;
+  top: 0;
+  margin-left: 0; 
+  margin-right: 0;
+}
+
+.contentnew {
+  background-color:#304136;
+  position:fixed ;
+  z-index: 12;
+  width: 100%;
+  left: 0;
+  top: 0vw;
+  margin-left: 0; 
+  margin-right: 0;
+}
+.content {
+  position:fixed ;
+  z-index: 7;
+  width: 100vw;
+  left: 0;
+  top: 0.5vw;
+  margin-left: 35vw; 
+  margin-right: 0;
+  font-size: 10vw;
+}
+
+.headerRight {
+  z-index: 12;
+  position:fixed;
+  right: 0;
+  width: 9vw;
+  height: 17vw;
+  margin-left: auto; 
+  margin-right: 0;
+  margin: 0.5vw 1vw 0;
+
+
+}
+
+
+
+.headerLeft {
+  z-index: 12;
+  position:fixed;
+  left: 0;
+  width: 20vw;
+  top:0;
+  height: 12.73vw;
+  margin-right: auto; 
+  margin-left: 0;
+  padding-left: 1vw;
+
+}
+
+@media (min-width:9600px) { 
+}
+
+
+
+
+
+
+navbar-nav > .active > a { 
+    background-color: #000000 ; 
+    color: #000000
+}
+
+.navbar a:hover {
+  color: #f1f1f1;
+}
+
+main {
+    /* for debugging, a blue background lets us see the content */
+	min-height: calc(100vh - 2.5em); /* this leaves space for the sticky footer */
+ position: relative
+
+
+
+}
+
+
+body {
+    margin: -1% -1% 0; /* bottom = footer height */
+
+
+font-family: 'Titillium Web', sans-serif;
+}
+
+.MuiTypography-body1{
+  padding: 0 !important;
+}
+
+.body-tab{
+  padding: 20 !important;
+
+}
+
+
+
+.footerCop {
+  left: 0;
+  top: 0;
+  width: 104vw;
+  height: 20vw;
+  background-color: #304136; 
+  color: rgba(255, 255, 255, 0.623);
+  text-align: left;
+  padding-left: 5vw; 
+  padding-right: 20vw;
+  padding-top:5vw;
+}
+
+
+
+.header_breitesimage {
+  position:fixed;
+  right: 0;
+  top: -15px;
+  width: 10%;
+  height: 50px; 
+  margin-left: auto; 
+  margin-right: 0;
+}
+
+
+
+
+.footerTextBig {
+  text-align: left;
+  font-family: 'Titillium Web', sans-serif;
+  margin-left: auto; 
+margin-right: 0;
+font-size: 2vw;
+font-weight:lighter;
+}
+
+.footerTextSmall{
+  text-align: right;
+  font-family: 'Titillium Web', sans-serif;
+  margin-left: auto; 
+margin-right: -15vw;
+font-size: 1vw;
+font-weight:lighter;
+
+}
+
+
+
+
+
+
+

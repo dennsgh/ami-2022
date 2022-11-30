@@ -1,0 +1,149 @@
+{
+    "categories": [{
+            "id": 0,
+            "name": "dent"
+        },
+        {
+            "id": 1,
+            "name": "other"
+        },
+        {
+            "id": 2,
+            "name": "rim"
+        },
+        {
+            "id": 3,
+            "name": "scratch"
+        }
+    ],
+    "images": [{
+            "id": 1,
+            "filepath": "ima.png"
+        },
+        {
+            "id": 2,
+            "filepath": "imb.png"
+        },
+        {
+            "id": 3,
+            "filepath": "imc.png"
+        },
+        {
+            "id": 4,
+            "filepath": "imd.png"
+        }
+    ],
+    "annotations": [{
+            "id": 1,
+            "filepath": "ima.png",
+            "source": "ima.png",
+            "image_id": 1,
+            "category_id": 0
+        },
+        {
+            "id": 2,
+            "filepath": "imb.png",
+            "source": "imb.png",
+            "image_id": 2,
+            "category_id": 1
+        },
+        {
+            "id": 3,
+            "filepath": "imc.png",
+            "source": "imc.png",
+            "image_id": 3,
+            "category_id": 2
+        },
+        {
+            "id": 4,
+            "filepath": "imd.png",
+            "source": "imd.png",
+            "image_id": 4,
+            "category_id": 3
+        },
+        {
+            "id": 5,
+            "filepath": "ima.png",
+            "source": "ima.png",
+            "image_id": 5,
+            "category_id": 0
+        },
+        {
+            "id": 6,
+            "filepath": "imb.png",
+            "source": "imb.png",
+            "image_id": 6,
+            "category_id": 1
+        },
+        {
+            "id": 7,
+            "filepath": "imc.png",
+            "source": "imc.png",
+            "image_id": 7,
+            "category_id": 2
+        },
+        {
+            "id": 8,
+            "filepath": "imd.png",
+            "source": "imd.png",
+            "image_id": 8,
+            "category_id": 3
+        },
+        {
+            "id": 9,
+            "filepath": "ima.png",
+            "source": "ima.png",
+            "image_id": 9,
+            "category_id": 0
+        },
+        {
+            "id": 10,
+            "filepath": "imb.png",
+            "source": "imb.png",
+            "image_id": 10,
+            "category_id": 1
+        },
+        {
+            "id": 11,
+            "filepath": "imc.png",
+            "source": "imc.png",
+            "image_id": 11,
+            "category_id": 2
+        },
+        {
+            "id": 12,
+            "filepath": "imd.png",
+            "source": "imd.png",
+            "image_id": 12,
+            "category_id": 3
+        },
+        {
+            "id": 13,
+            "filepath": "ima.png",
+            "source": "ima.png",
+            "image_id": 13,
+            "category_id": 0
+        },
+        {
+            "id": 14,
+            "filepath": "imb.png",
+            "source": "imb.png",
+            "image_id": 14,
+            "category_id": 1
+        },
+        {
+            "id": 15,
+            "filepath": "imc.png",
+            "source": "imc.png",
+            "image_id": 15,
+            "category_id": 2
+        },
+        {
+            "id": 16,
+            "filepath": "imd.png",
+            "source": "imd.png",
+            "image_id": 16,
+            "category_id": 3
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+pytest = "*"
+flask = "*"
+requests = "*"
+numpy = "1.23.0"
+opencv-python = "*"
+multipledispatch = "*"
+pydot = "*"
+pandas = "1.4.3"
+Pillow = "9.2.0"
+pyrsistent = "0.18.1"
+tensorflow_addons = "0.17.1"
+gunicorn = "*"
+tensorflow = "*"
+python-dotenv = "*"
+flask-session = "*"
+optuna = "*"
+mlflow = {extras = ["extras"], version = "*"}
+scikit-learn = "*"
+matplotlib = "*"
+plotly = "*"
+
+[requires]
+python_version = "3.8"

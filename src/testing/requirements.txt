@@ -1,0 +1,5 @@
+numpy==1.23.0
+pandas==1.4.3
+Pillow==9.2.0
+pyrsistent==0.18.1
+tensorflow_addons==0.17.1

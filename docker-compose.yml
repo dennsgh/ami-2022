@@ -1,0 +1,11 @@
+version: "3"
+services:
+  server:
+    container_name: server
+    image: ${server_image_name}:${project_version}${server_tag_suffix}
+  frontend:
+    container_name: frontend
+    image: ${frontend_image_name}:${project_version}${frontend_tag_suffix}
+    ports: 
+      - "3000:80"
+

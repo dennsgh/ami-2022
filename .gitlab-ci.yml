@@ -1,0 +1,195 @@
+stages:
+  - build
+  - test
+  - deploy
+
+.build_latest:
+  stage: build
+  image: docker:latest
+  tags:
+    - build
+
+  services:
+    - docker:dind
+
+  before_script:
+    - PWD=$(pwd)
+    - export WORKDIR=$PWD
+    - echo $CI_REG_PASSWORD | docker login $CI_REGISTRY -u $CI_REG_USER --password-stdin
+
+  rules:
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^docker_/
+      when: always
+
+  after_script:
+    - docker logout $CI_REGISTRY
+
+.build:
+  stage: build
+  image: docker:latest
+  tags:
+    - build
+
+  services:
+    - docker:dind
+
+  before_script:
+    - PWD=$(pwd)
+    - export WORKDIR=$PWD
+    - echo $CI_REG_PASSWORD | docker login $CI_REGISTRY -u $CI_REG_USER --password-stdin
+
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^docker_/
+      when: always
+
+  after_script:
+    - docker logout $CI_REGISTRY
+
+build server image:
+  extends: .build
+  variables:
+    DIRECTORY: server
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}_server
+  script:
+    - docker build --build-arg WORKINGDIR_ARG=$WORKDIR -t ${IMAGE_NAME}  .
+    - docker push $IMAGE_NAME
+
+build frontend image:
+  extends: .build
+  variables:
+    DIRECTORY: frontend
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}_frontend
+  script:
+    - docker build --build-arg WORKINGDIR_ARG=$WORKDIR -t ${IMAGE_NAME} -f ${DIRECTORY}/Dockerfile ${DIRECTORY}
+    - docker push $IMAGE_NAME
+
+build latest server image:
+  extends: .build_latest
+  variables:
+    DIRECTORY: server
+  script:
+    - docker build --build-arg WORKINGDIR_ARG=$WORKDIR -t ${CI_REGISTRY_IMAGE}:ami_${DIRECTORY} .
+    - docker push ${CI_REGISTRY_IMAGE}:ami_${DIRECTORY}
+
+build latest frontend image:
+  extends: .build_latest
+  variables:
+    DIRECTORY: frontend
+  script:
+    - docker build --build-arg WORKINGDIR_ARG=$WORKDIR -t ${CI_REGISTRY_IMAGE}:ami_${DIRECTORY} -f ${DIRECTORY}/Dockerfile ${DIRECTORY}
+    - docker push ${CI_REGISTRY_IMAGE}:ami_${DIRECTORY}
+
+unittest:
+  extends: .unittests
+  variables:
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}:ami_server
+    CI_DEBUG_TRACE: "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH !~ /^docker_/
+      when: always
+
+unittest docker:
+  extends: .unittests
+  variables:
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}_server
+    CI_DEBUG_TRACE: "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^docker_/
+      when: always
+
+.unittests:
+  image: $IMAGE_NAME
+  stage: test
+
+  script:
+    - echo $IMAGE_NAME
+    - pip install pytest
+    - python3 -m pytest --version
+    - python3 -m pytest ./src/testing/pyunittests
+
+linting:
+  image: python:3.8-slim-buster
+  stage: test
+
+  script:
+    - python --version
+    - pip --version
+    - pip install pytest
+    - python3 -m pytest --version
+    - python3 -m pytest -s src/testing/linting --branch_name $CI_COMMIT_BRANCH --root_folder $CI_PROJECT_DIR
+
+  only:
+    - pushes
+
+model tests:
+  extends: .modeltests
+  variables:
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}:ami_server
+    CI_DEBUG_TRACE: "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH !~ /^docker_/
+      when: always
+
+model tests docker:
+  extends: .modeltests
+  variables:
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}_server
+    CI_DEBUG_TRACE: "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^docker_/
+      when: always
+
+.modeltests:
+  image: ${CI_REGISTRY_IMAGE}:ami_server
+  stage: test
+
+  script:
+    - echo ${CI_REGISTRY_IMAGE}:ami_server
+    - source etc/setup.sh
+    - pip install pytest
+    - pytest --version
+    - pytest -s ./src/testing/model_testing
+
+pipeline tests:
+  extends: .pipelinetests
+  variables:
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}:ami_server
+    CI_DEBUG_TRACE: "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH !~ /^docker_/
+      when: always
+
+pipeline tests docker:
+  extends: .pipelinetests
+  variables:
+    IMAGE_NAME: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}_server
+    CI_DEBUG_TRACE: "true"
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^docker_/
+      when: always
+
+.pipelinetests:
+  image: ${CI_REGISTRY_IMAGE}:ami_server
+  stage: test
+
+  script:
+    - echo ${CI_REGISTRY_IMAGE}:ami_server
+    - pip install pytest
+    - pytest --version
+    - pytest -s ./src/testing/pipeline_testing
+
+deploy_prod:
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  stage: deploy
+  tags:
+    - deploy
+
+  script:
+    - cp kubernetes/config04 ~/.kube/config
+    - kubectl apply -f kubernetes/deployment
+
+  rules:
+    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^develop/
+      when: always
